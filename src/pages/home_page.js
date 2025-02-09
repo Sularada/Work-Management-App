@@ -1,7 +1,11 @@
 import createHome from "../templates/home.js";
 
 function createHomePage() {
-  const home_temlate = createHome("Work Management App");
+  const home_temlate = createHome("Work Management App", [
+    "Kadriye Demirci",
+    "Cansu Çevik",
+    "Ahmet Özalp",
+  ]);
   console.log(home_temlate);
   return home_temlate;
 }

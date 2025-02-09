@@ -8,7 +8,7 @@ const all_home_page = createHomePage();
 all_home_page.forEach((item) => {
   body.append(item);
 });
-console.log(home_page);
+//console.log(home_page);
 
 // import("./src/atoms/button.js").then(() => {
 //   const btn = createButton(
