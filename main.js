@@ -1,8 +1,14 @@
 import createHeader from "./src/organisms/header.js";
 import createButton from "./src/atoms/button.js";
+import createCard from "./src/molecules/card.js";
+import createHomePage from "./src/pages/home_page.js";
+const body = document.querySelector("body");
 
-const header = createHeader("Work Management App");
-document.querySelector("body").append(header);
+const all_home_page = createHomePage();
+all_home_page.forEach((item) => {
+  body.append(item);
+});
+console.log(home_page);
 
 // import("./src/atoms/button.js").then(() => {
 //   const btn = createButton(
