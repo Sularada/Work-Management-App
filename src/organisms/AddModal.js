@@ -24,14 +24,22 @@ function createAddModal(person_list) {
   const state_label = createLabel("State");
   const states = document.createElement("div");
   const state_input_todo = createInput("state", "", "radio", "Todo", "status");
+  const state_label_todo = createLabel("Todo");
   const state_input_dev = createInput("state", "", "radio", "Dev", "status");
+  const state_label_dev = createLabel("Dev");
   const state_input_test = createInput("state", "", "radio", "Test", "status");
+  const state_label_test = createLabel("Test");
   const state_input_live = createInput("state", "", "radio", "Live", "status");
+  const state_label_live = createLabel("Live");
   states.append(
     state_input_todo,
+    state_label_todo,
     state_input_dev,
+    state_label_dev,
     state_input_test,
-    state_input_live
+    state_label_test,
+    state_input_live,
+    state_label_live
   );
   const info_label = createLabel("Work Information");
   const info_input = createInput("info", "Please enter information");
