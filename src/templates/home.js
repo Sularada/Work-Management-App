@@ -9,9 +9,9 @@ function createHome(header, person_list) {
   const main = document.createElement("main");
   main.className = "flex flex-wrap";
   const todo_article = createTodoArticle(person_list);
-  const dev_article = createDevArticle();
-  const test_article = createTestArticle();
-  const live_article = createLiveArticle();
+  const dev_article = createDevArticle(person_list);
+  const test_article = createTestArticle(person_list);
+  const live_article = createLiveArticle(person_list);
   main.append(todo_article, dev_article, test_article, live_article);
   return [header_section, main];
 }

@@ -23,13 +23,13 @@ function createAddModal(person_list) {
   const time_input = createInput("date", "", "date");
   const state_label = createLabel("State");
   const states = document.createElement("div");
-  const state_input_todo = createInput("state", "", "radio", "Todo", "status");
+  const state_input_todo = createInput("state", "", "radio", "Todo", "state");
   const state_label_todo = createLabel("Todo");
-  const state_input_dev = createInput("state", "", "radio", "Dev", "status");
+  const state_input_dev = createInput("state", "", "radio", "Dev", "state");
   const state_label_dev = createLabel("Dev");
-  const state_input_test = createInput("state", "", "radio", "Test", "status");
+  const state_input_test = createInput("state", "", "radio", "Test", "state");
   const state_label_test = createLabel("Test");
-  const state_input_live = createInput("state", "", "radio", "Live", "status");
+  const state_input_live = createInput("state", "", "radio", "Live", "state");
   const state_label_live = createLabel("Live");
   states.append(
     state_input_todo,
@@ -57,11 +57,23 @@ function createAddModal(person_list) {
     info_label,
     info_input
   );
-  const save_button = createButton("Save", "", saveFunction);
+  const save_button = createButton("Save", "", function () {
+    const work = {
+      id: id_input.value,
+      name: name_input.value,
+      person: person_input.value,
+      time: time_input.value,
+      state: document.querySelector('input[name="state"]:checked').value,
+      info: info_input.value,
+    };
+
+    const todo_storage = JSON.parse(localStorage.getItem(`${work.state}`));
+    todo_storage.push(work);
+    localStorage.setItem(`${work.state}`, JSON.stringify(todo_storage));
+    location.reload();
+  });
   modal.append(h2, form, save_button);
   return modal;
 }
-function saveFunction() {
-  alert("saved");
-}
+
 export default createAddModal;
