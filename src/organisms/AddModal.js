@@ -2,7 +2,8 @@ import createButton from "../atoms/button.js";
 import createH2 from "../atoms/h2.js";
 import createInput from "../atoms/input.js";
 import createLabel from "../atoms/label.js";
-import createSelect from "../atoms/select.js";
+import createSelect from "../molecules/select.js";
+import LocaleStorageApi from "../sevices/localStorageApi.js";
 
 function createAddModal(person_list) {
   const modal = document.createElement("div");
@@ -24,6 +25,7 @@ function createAddModal(person_list) {
   const state_label = createLabel("State");
   const states = document.createElement("div");
   const state_input_todo = createInput("state", "", "radio", "Todo", "state");
+  state_input_todo.checked = true;
   const state_label_todo = createLabel("Todo");
   const state_input_dev = createInput("state", "", "radio", "Dev", "state");
   const state_label_dev = createLabel("Dev");
@@ -58,22 +60,51 @@ function createAddModal(person_list) {
     info_input
   );
   const save_button = createButton("Save", "", function () {
-    const work = {
-      id: id_input.value,
-      name: name_input.value,
-      person: person_input.value,
-      time: time_input.value,
-      state: document.querySelector('input[name="state"]:checked').value,
-      info: info_input.value,
-    };
-
-    const todo_storage = JSON.parse(localStorage.getItem(`${work.state}`));
-    todo_storage.push(work);
-    localStorage.setItem(`${work.state}`, JSON.stringify(todo_storage));
-    location.reload();
+    if (
+      checkInputs(
+        [...form.querySelectorAll("input")].filter(
+          (item) => item.name != `state`
+        )
+      ) == true &&
+      checkId(id_input.value) == true
+    ) {
+      const work = {
+        id: id_input.value,
+        name: name_input.value,
+        person: person_input.value,
+        time: time_input.value,
+        state: document.querySelector('input[name="state"]:checked').value,
+        info: info_input.value,
+      };
+      const todo_storage = LocaleStorageApi.get(work.state);
+      todo_storage.push(work);
+      LocaleStorageApi.set(work.state, todo_storage);
+    }
   });
   modal.append(h2, form, save_button);
   return modal;
+}
+function checkInputs(inputs) {
+  let valid = true;
+  inputs.forEach((input) => {
+    if (input.value == "" || input.value == null) {
+      valid = false;
+      alert(input.name + " is requred!");
+    }
+  });
+  return valid;
+}
+function checkId(id) {
+  let valid = true;
+  ["Todo", "Dev", "Test", "Live"].forEach((state) => {
+    LocaleStorageApi.get(state).forEach((work) => {
+      if (work.id == id) {
+        valid = false;
+        alert("Id must be unique!");
+      }
+    });
+  });
+  return valid;
 }
 
 export default createAddModal;

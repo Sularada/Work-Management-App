@@ -2,7 +2,8 @@ import createButton from "../atoms/button.js";
 import createH2 from "../atoms/h2.js";
 import createInput from "../atoms/input.js";
 import createLabel from "../atoms/label.js";
-import createSelect from "../atoms/select.js";
+import createSelect from "../molecules/select.js";
+import LocaleStorageApi from "../sevices/localStorageApi.js";
 
 function createEditModal(person_list, work) {
   const modal = document.createElement("div");
@@ -16,6 +17,7 @@ function createEditModal(person_list, work) {
   const id_label = createLabel("Id");
   const id_input = createInput("id", "Please enter work id", "text");
   id_input.value = work.id;
+  id_input.readOnly = true;
   const name_label = createLabel("Name");
   const name_input = createInput("name", "Please enter work name");
   name_input.value = work.name;
@@ -38,15 +40,21 @@ function createEditModal(person_list, work) {
   switch (work.state) {
     case "Todo":
       state_input_todo.checked = true;
+      state_input_test.disabled = true;
+      state_input_live.disabled = true;
       break;
     case "Dev":
       state_input_dev.checked = true;
+      state_input_live.disabled = true;
       break;
     case "Test":
       state_input_test.checked = true;
+      state_input_todo.checked = true;
       break;
     case "Live":
       state_input_live.checked = true;
+      state_input_dev.disabled = true;
+      state_input_todo.disabled = true;
       break;
   }
   states.append(
@@ -77,48 +85,70 @@ function createEditModal(person_list, work) {
     info_input
   );
   const update_button = createButton("Update", "", function () {
-    let local_storage = JSON.parse(localStorage.getItem(`${work.state}`));
-    work.id = id_input.value;
-    work.name = name_input.value;
-    work.person = person_input.value;
-    work.time = time_input.value;
-    work.info = info_input.value;
     if (
-      work.state == document.querySelector('input[name="state"]:checked').value
+      checkInputs(
+        [...form.querySelectorAll("input")].filter(
+          (item) => item.name != `state`
+        )
+      ) == true
     ) {
-      for (let i = 0; i < local_storage.length; i++) {
-        if (local_storage[i].id == work.id) {
-          //local_storage.item = work;
-          local_storage[i] = work;
+      let local_storage = LocaleStorageApi.get(work.state);
+      work.id = id_input.value;
+      work.name = name_input.value;
+      work.person = person_input.value;
+      work.time = time_input.value;
+      work.info = info_input.value;
+      if (
+        work.state ==
+        document.querySelector('input[name="state"]:checked').value
+      ) {
+        for (let i = 0; i < local_storage.length; i++) {
+          if (local_storage[i].id == work.id) {
+            //local_storage.item = work;
+            local_storage[i] = work;
+          }
         }
+      } else {
+        for (let i = 0; i < local_storage.length; i++) {
+          if (local_storage[i].id == work.id) {
+            //local_storage.item = work;
+            local_storage.splice(i, 1);
+            LocaleStorageApi.set(work.state, local_storage);
+          }
+        }
+        work.state = document.querySelector(
+          'input[name="state"]:checked'
+        ).value;
+        local_storage = LocaleStorageApi.get(work.state);
+        local_storage.push(work);
       }
+      LocaleStorageApi.set(work.state, local_storage);
     } else {
-      for (let i = 0; i < local_storage.length; i++) {
-        if (local_storage[i].id == work.id) {
-          //local_storage.item = work;
-          local_storage.splice(i, 1);
-          localStorage.setItem(`${work.state}`, JSON.stringify(local_storage));
-        }
-      }
-      work.state = document.querySelector('input[name="state"]:checked').value;
-      local_storage = JSON.parse(localStorage.getItem(`${work.state}`));
-      local_storage.push(work);
+      alert("Please, check your inputs!");
     }
-    localStorage.setItem(`${work.state}`, JSON.stringify(local_storage));
-    location.reload();
   });
   const delete_button = createButton("Delete", "", function () {
-    let local_storage = JSON.parse(localStorage.getItem(`${work.state}`));
+    let local_storage = LocaleStorageApi.get(work.state);
     for (let i = 0; i < local_storage.length; i++) {
       if (local_storage[i].id == work.id) {
         //local_storage.item = work;
         local_storage.splice(i, 1);
-        localStorage.setItem(`${work.state}`, JSON.stringify(local_storage));
+        LocaleStorageApi.set(work.state, local_storage);
+        break;
       }
     }
-    location.reload();
   });
   modal.append(h2, form, update_button, delete_button);
   return modal;
 }
+function checkInputs(inputs) {
+  let valid = true;
+  inputs.forEach((input) => {
+    if (input.value == "" || input.value == null) {
+      valid = false;
+    }
+  });
+  return valid;
+}
+
 export default createEditModal;

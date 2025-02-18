@@ -1,4 +1,4 @@
-import createOption from "./option.js";
+import createOption from "../atoms/option.js";
 
 function createSelect(id, list) {
   const select = document.createElement("select");
