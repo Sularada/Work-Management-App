@@ -5,7 +5,8 @@ function createInput(id, place_holder, type, value = "", name = "") {
   input.type = type;
   input.value = value;
   input.name = name;
-  input.className = "";
+  input.className =
+    "rounded-md border-1 border-sky-800 focus:border-sky-950 p-1 mb-2";
   input.required = true;
   return input;
 }

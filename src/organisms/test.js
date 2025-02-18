@@ -2,8 +2,10 @@ import createH2 from "../atoms/h2.js";
 import createCard from "../molecules/card.js";
 function createTestArticle(person_list) {
   const test_article = document.createElement("article");
-  test_article.className = "flex-1";
+  test_article.className = "flex-1 border-l-2 border-dotted border-sky-950";
   const test_head = document.createElement("div");
+  test_head.className =
+    "text-stone-100  font-semibold  text-2xl bg-sky-950 border-y-4 border-double flex justify-between";
   const test_works = document.createElement("div");
   test_works.className = "test-works";
   const h2 = createH2("Test");

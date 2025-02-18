@@ -7,11 +7,8 @@ import LocaleStorageApi from "../sevices/localStorageApi.js";
 
 function createEditModal(person_list, work) {
   const modal = document.createElement("div");
-  modal.className = "absolute top-50 right-50 max-w-lg";
-  // modal.style.position = "absolute";
-  // modal.style.top = "50%";
-  // modal.style.left = "50%";
-  // modal.style.maxWidth = "450px";
+  modal.className =
+    "bg-stone-200 p-3 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ";
   const h2 = createH2("Edit Work");
   const form = document.createElement("form");
   const id_label = createLabel("Id");
@@ -84,7 +81,7 @@ function createEditModal(person_list, work) {
     info_label,
     info_input
   );
-  const update_button = createButton("Update", "", function () {
+  const update_button = createButton("Update", function () {
     if (
       checkInputs(
         [...form.querySelectorAll("input")].filter(
@@ -127,7 +124,7 @@ function createEditModal(person_list, work) {
       alert("Please, check your inputs!");
     }
   });
-  const delete_button = createButton("Delete", "", function () {
+  const delete_button = createButton("Delete", function () {
     let local_storage = LocaleStorageApi.get(work.state);
     for (let i = 0; i < local_storage.length; i++) {
       if (local_storage[i].id == work.id) {

@@ -8,7 +8,7 @@ import createProcessArticle from "../organisms/process/process.js";
 function createHome(header, person_list, processes) {
   const header_section = createHeader(header);
   const main = document.createElement("main");
-  main.className = "flex flex-wrap";
+  main.className = "flex flex-wrap h-full";
   const screen = document.createElement("section");
   screen.className = "process flex-3 flex flex-wrap";
   const process_article = createProcessArticle(processes);

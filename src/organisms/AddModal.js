@@ -7,21 +7,28 @@ import LocaleStorageApi from "../sevices/localStorageApi.js";
 
 function createAddModal(person_list) {
   const modal = document.createElement("div");
-  modal.className = "absolute top-50 right-50 max-w-lg";
-  // modal.style.position = "absolute";
-  // modal.style.top = "50%";
-  // modal.style.left = "50%";
-  // modal.style.maxWidth = "450px";
+
+  modal.className =
+    "bg-stone-200 p-3 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ";
   const h2 = createH2("Create New Work");
   const form = document.createElement("form");
+  const id_div = document.createElement("div");
   const id_label = createLabel("Id");
   const id_input = createInput("id", "Please enter work id", "text");
+  id_div.append(id_label, id_input);
+  const name_div = document.createElement("div");
   const name_label = createLabel("Name");
   const name_input = createInput("name", "Please enter work name");
+  name_div.append(name_label, name_input);
+  const person_div = document.createElement("div");
   const person_label = createLabel("Assigned to");
   const person_input = createSelect("person", person_list);
+  person_div.append(person_label, person_input);
+  const time_div = document.createElement("div");
   const time_label = createLabel("Date");
   const time_input = createInput("date", "", "date");
+  time_div.append(time_label, time_input);
+  const state_div = document.createElement("div");
   const state_label = createLabel("State");
   const states = document.createElement("div");
   const state_input_todo = createInput("state", "", "radio", "Todo", "state");
@@ -43,23 +50,13 @@ function createAddModal(person_list) {
     state_input_live,
     state_label_live
   );
+  state_div.append(state_label, states);
+  const info_div = document.createElement("div");
   const info_label = createLabel("Work Information");
   const info_input = createInput("info", "Please enter information");
-  form.append(
-    id_label,
-    id_input,
-    name_label,
-    name_input,
-    person_label,
-    person_input,
-    time_label,
-    time_input,
-    state_label,
-    states,
-    info_label,
-    info_input
-  );
-  const save_button = createButton("Save", "", function () {
+  info_div.append(info_label, info_input);
+  form.append(id_div, name_div, person_div, time_div, state_div, info_div);
+  const save_button = createButton("Save", function () {
     if (
       checkInputs(
         [...form.querySelectorAll("input")].filter(
