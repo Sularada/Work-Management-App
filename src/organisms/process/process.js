@@ -1,5 +1,5 @@
-import createUl from "../../molecules/ul.js";
-import createH2 from "../../atoms/h2.js";
+import createUl from "../../molecules/ul/ul.js";
+import createH2 from "../../atoms/h2/h2.js";
 function createProcessArticle(process) {
   const pro_article = document.createElement("article");
   pro_article.className = "flex-1 bg-sky-950 ";

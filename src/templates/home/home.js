@@ -1,9 +1,9 @@
-import createTodoArticle from "../organisms/todo.js";
-import createHeader from "../organisms/header.js";
-import createDevArticle from "../organisms/dev.js";
-import createTestArticle from "../organisms/test.js";
-import createLiveArticle from "../organisms/live.js";
-import createProcessArticle from "../organisms/process/process.js";
+import createTodoArticle from "../../organisms/article/todo.js";
+import createHeader from "../../organisms/header/header.js";
+import createDevArticle from "../../organisms/article/dev.js";
+import createTestArticle from "../../organisms/article/test.js";
+import createLiveArticle from "../../organisms/article/live.js";
+import createProcessArticle from "../../organisms/process/process.js";
 
 function createHome(header, person_list, processes) {
   const header_section = createHeader(header);

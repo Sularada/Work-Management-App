@@ -1,5 +1,6 @@
-import createH2 from "../atoms/h2.js";
-import createCard from "../molecules/card.js";
+import createH2 from "../../atoms/h2/h2.js";
+import createCard from "../../molecules/card/card.js";
+import LocaleStorageApi from "../../sevices/localStorageApi.js";
 function createDevArticle(person_list) {
   const dev_article = document.createElement("article");
   dev_article.className = "flex-1 border-l-2 border-dotted border-sky-950";
@@ -12,10 +13,7 @@ function createDevArticle(person_list) {
   h2.className = " p-2";
   dev_head.append(h2);
   dev_article.append(dev_head, dev_works);
-  if (JSON.parse(localStorage.getItem(`Dev`)) == null) {
-    localStorage.setItem(`Dev`, JSON.stringify([]));
-  }
-  const dev_storage = JSON.parse(localStorage.getItem(`Dev`));
+  const dev_storage = LocaleStorageApi.get(`Dev`);
   dev_storage.forEach((work) => {
     const card = createCard(person_list, work);
     dev_works.append(card);

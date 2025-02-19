@@ -1,9 +1,9 @@
-import createButton from "../atoms/button.js";
-import createH2 from "../atoms/h2.js";
-import createInput from "../atoms/input.js";
-import createLabel from "../atoms/label.js";
-import createSelect from "../molecules/select.js";
-import LocaleStorageApi from "../sevices/localStorageApi.js";
+import createButton from "../../atoms/button/button.js";
+import createH2 from "../../atoms/h2/h2.js";
+import createInput from "../../atoms/input/input.js";
+import createLabel from "../../atoms/label/label.js";
+import createSelect from "../../molecules/select/select.js";
+import LocaleStorageApi from "../../sevices/localStorageApi.js";
 
 function createEditModal(person_list, work) {
   const modal = document.createElement("div");

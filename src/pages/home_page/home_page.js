@@ -1,4 +1,4 @@
-import createHome from "../templates/home.js";
+import createHome from "../../templates/home/home.js";
 
 function createHomePage() {
   const home_temlate = createHome(

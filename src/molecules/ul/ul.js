@@ -1,4 +1,4 @@
-import createLi from "../atoms/li.js";
+import createLi from "../../atoms/li/li.js";
 
 function createUl(id, list) {
   const ul = document.createElement("ul");

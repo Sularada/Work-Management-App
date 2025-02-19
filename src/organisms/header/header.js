@@ -1,4 +1,4 @@
-import createH1 from "../atoms/h1.js";
+import createH1 from "../../atoms/h1/h1.js";
 
 function createHeader(text) {
   const header = document.createElement("header");
