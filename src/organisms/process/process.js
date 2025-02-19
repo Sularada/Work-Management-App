@@ -1,5 +1,6 @@
 import createUl from "../../molecules/ul/ul.js";
 import createH2 from "../../atoms/h2/h2.js";
+import createFilter from "../../molecules/filter/filter.js";
 function createProcessArticle(process) {
   const pro_article = document.createElement("article");
   pro_article.className = "flex-1 bg-sky-950 ";
@@ -11,7 +12,9 @@ function createProcessArticle(process) {
     "text-stone-100 font-semibold  text-2xl border-y-4 border-double p-2";
   pro_head.append(h2);
   const ul = createUl("process", process);
-  processes.append(ul);
+  const filter = createFilter();
+  processes.append(ul, filter);
+
   pro_article.append(pro_head, processes);
   return pro_article;
 }
