@@ -2,14 +2,22 @@ import createButton from "../../atoms/button/button.js";
 import createH2 from "../../atoms/h2/h2.js";
 import createInput from "../../atoms/input/input.js";
 import createLabel from "../../atoms/label/label.js";
+import createTextarea from "../../atoms/textarea/textarea.js";
 import createSelect from "../../molecules/select/select.js";
 import LocaleStorageApi from "../../sevices/localStorageApi.js";
 
-function createEditModal(person_list, work) {
+function createEditModal(work) {
   const modal = document.createElement("div");
+  const modal_head = document.createElement("div");
+  modal_head.className = "flex justify-between my-3";
   modal.className =
     "bg-stone-200 p-3 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ";
   const h2 = createH2("Edit Work");
+  h2.className = "text-xl";
+  const close_btn = createButton("✖️", () => {
+    modal.remove();
+  });
+  modal_head.append(h2, close_btn);
   const form = document.createElement("form");
   const id_label = createLabel("Id");
   const id_input = createInput("id", "Please enter work id", "text");
@@ -19,7 +27,7 @@ function createEditModal(person_list, work) {
   const name_input = createInput("name", "Please enter work name");
   name_input.value = work.name;
   const person_label = createLabel("Assigned to");
-  const person_input = createSelect("person", person_list);
+  const person_input = createSelect("person", LocaleStorageApi.employeeGet());
   person_input.value = work.person;
   const time_label = createLabel("Date");
   const time_input = createInput("date", "", "date");
@@ -65,7 +73,7 @@ function createEditModal(person_list, work) {
     state_label_live
   );
   const info_label = createLabel("Work Information");
-  const info_input = createInput("info", "Please enter information");
+  const info_input = createTextarea("info", "Please enter information");
   info_input.value = work.info;
   form.append(
     id_label,
@@ -84,10 +92,12 @@ function createEditModal(person_list, work) {
   const update_button = createButton("Update", function () {
     if (
       checkInputs(
-        [...form.querySelectorAll("input")].filter(
-          (item) => item.name != `state`
-        )
-      ) == true
+        [
+          ...form.querySelectorAll("input"),
+          ...form.querySelectorAll("textarea"),
+        ].filter((item) => item.name != `state`)
+      ) == true &&
+      person_input.value != "Select Employee"
     ) {
       let local_storage = LocaleStorageApi.get(work.state);
       work.id = id_input.value;
@@ -135,7 +145,7 @@ function createEditModal(person_list, work) {
       }
     }
   });
-  modal.append(h2, form, update_button, delete_button);
+  modal.append(modal_head, form, update_button, delete_button);
   return modal;
 }
 function checkInputs(inputs) {

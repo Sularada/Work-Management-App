@@ -2,15 +2,22 @@ import createButton from "../../atoms/button/button.js";
 import createH2 from "../../atoms/h2/h2.js";
 import createInput from "../../atoms/input/input.js";
 import createLabel from "../../atoms/label/label.js";
+import createTextarea from "../../atoms/textarea/textarea.js";
 import createSelect from "../../molecules/select/select.js";
 import LocaleStorageApi from "../../sevices/localStorageApi.js";
 
-function createAddModal(person_list) {
+function createAddModal() {
   const modal = document.createElement("div");
-
+  const modal_head = document.createElement("div");
+  modal_head.className = "flex justify-between my-3";
   modal.className =
     "bg-stone-200 p-3 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ";
   const h2 = createH2("Create New Work");
+  h2.className = "text-xl";
+  const close_btn = createButton("✖️", () => {
+    modal.remove();
+  });
+  modal_head.append(h2, close_btn);
   const form = document.createElement("form");
   const id_div = document.createElement("div");
   const id_label = createLabel("Id");
@@ -22,7 +29,7 @@ function createAddModal(person_list) {
   name_div.append(name_label, name_input);
   const person_div = document.createElement("div");
   const person_label = createLabel("Assigned to");
-  const person_input = createSelect("person", person_list);
+  const person_input = createSelect("person", LocaleStorageApi.employeeGet());
   person_div.append(person_label, person_input);
   const time_div = document.createElement("div");
   const time_label = createLabel("Date");
@@ -53,17 +60,19 @@ function createAddModal(person_list) {
   state_div.append(state_label, states);
   const info_div = document.createElement("div");
   const info_label = createLabel("Work Information");
-  const info_input = createInput("info", "Please enter information");
+  const info_input = createTextarea("info", "Please enter information");
   info_div.append(info_label, info_input);
   form.append(id_div, name_div, person_div, time_div, state_div, info_div);
   const save_button = createButton("Save", function () {
     if (
       checkInputs(
-        [...form.querySelectorAll("input")].filter(
-          (item) => item.name != `state`
-        )
+        [
+          ...form.querySelectorAll("input"),
+          ...form.querySelectorAll("textarea"),
+        ].filter((item) => item.name != `state`)
       ) == true &&
-      checkId(id_input.value) == true
+      checkId(id_input.value) == true &&
+      person_input.value != "Select Employee"
     ) {
       const work = {
         id: id_input.value,
@@ -78,7 +87,7 @@ function createAddModal(person_list) {
       LocaleStorageApi.set(work.state, todo_storage);
     }
   });
-  modal.append(h2, form, save_button);
+  modal.append(modal_head, form, save_button);
   return modal;
 }
 function checkInputs(inputs) {

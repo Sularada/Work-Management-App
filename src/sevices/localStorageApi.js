@@ -15,7 +15,7 @@ class LocaleStorageApi {
   }
   static employeeGet() {
     if (JSON.parse(localStorage.getItem(`employee`)) == null) {
-      localStorage.setItem(`employee`, JSON.stringify([]));
+      localStorage.setItem(`employee`, JSON.stringify(["Select Employee"]));
     }
     return JSON.parse(localStorage.getItem(`employee`));
   }

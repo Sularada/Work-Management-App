@@ -1,10 +1,11 @@
 import createH4 from "../../atoms/h4/h4.js";
 import createP from "../../atoms/p/p.js";
 import createEditModal from "../../organisms/modal/editModal.js";
-function createCard(person_list, work) {
+function createCard(work) {
   const h4 = createH4(work.id + " - " + work.name);
   const date_text = createP("Deadline: " + work.time);
   const person_text = createP("Attached to: " + work.person);
+  person_text.className = "person-info";
   const info_text = createP("Work Details: " + work.info);
   const card = document.createElement("div");
   card.className =
@@ -14,7 +15,7 @@ function createCard(person_list, work) {
   card_head.append(h4);
   card.append(card_head, date_text, person_text, info_text);
   card.addEventListener("click", function () {
-    const modal = createEditModal(person_list, work);
+    const modal = createEditModal(work);
     const body = document.querySelector("body");
     body.append(modal);
   });

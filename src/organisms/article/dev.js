@@ -1,7 +1,7 @@
 import createH2 from "../../atoms/h2/h2.js";
 import createCard from "../../molecules/card/card.js";
 import LocaleStorageApi from "../../sevices/localStorageApi.js";
-function createDevArticle(person_list) {
+function createDevArticle() {
   const dev_article = document.createElement("article");
   dev_article.className = "flex-1 border-l-2 border-dotted border-sky-950";
   const dev_head = document.createElement("div");
@@ -15,7 +15,7 @@ function createDevArticle(person_list) {
   dev_article.append(dev_head, dev_works);
   const dev_storage = LocaleStorageApi.get(`Dev`);
   dev_storage.forEach((work) => {
-    const card = createCard(person_list, work);
+    const card = createCard(work);
     dev_works.append(card);
   });
   return dev_article;

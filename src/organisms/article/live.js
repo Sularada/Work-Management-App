@@ -1,7 +1,7 @@
 import createH2 from "../../atoms/h2/h2.js";
 import createCard from "../../molecules/card/card.js";
 import LocaleStorageApi from "../../sevices/localStorageApi.js";
-function createLiveArticle(person_list) {
+function createLiveArticle() {
   const live_article = document.createElement("article");
   live_article.className = "flex-1 border-l-2 border-dotted border-sky-950";
   const live_head = document.createElement("div");
@@ -14,7 +14,7 @@ function createLiveArticle(person_list) {
   live_article.append(live_head, live_works);
   const live_storage = LocaleStorageApi.get(`Live`);
   live_storage.forEach((work) => {
-    const card = createCard(person_list, work);
+    const card = createCard(work);
     live_works.append(card);
   });
   return live_article;

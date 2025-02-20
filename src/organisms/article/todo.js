@@ -3,7 +3,7 @@ import createH2 from "../../atoms/h2/h2.js";
 import createCard from "../../molecules/card/card.js";
 import LocaleStorageApi from "../../sevices/localStorageApi.js";
 import createAddModal from "../modal/addModal.js";
-function createTodoArticle(person_list) {
+function createTodoArticle() {
   const todo_article = document.createElement("article");
   todo_article.className = "flex-1 border-l-2 border-dotted border-sky-950";
   const todo_head = document.createElement("div");
@@ -13,7 +13,7 @@ function createTodoArticle(person_list) {
   todo_works.className = "todo-works";
   const h2 = createH2("Todo");
   const button = createButton("+", () => {
-    const modal = createAddModal(person_list);
+    const modal = createAddModal();
     const body = document.querySelector("body");
     body.append(modal);
   });
@@ -21,7 +21,7 @@ function createTodoArticle(person_list) {
   todo_article.append(todo_head, todo_works);
   const todo_storage = LocaleStorageApi.get(`Todo`);
   todo_storage.forEach((work) => {
-    const card = createCard(person_list, work);
+    const card = createCard(work);
     todo_works.append(card);
   });
   return todo_article;
